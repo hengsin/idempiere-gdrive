@@ -62,6 +62,9 @@
 	position: relative;
 	overflow: hidden;
 }
+.adwindow-toolbar.z-toolbar .z-toolbarbutton {
+	display: inline-flex;
+}
 
 .adwindow-breadcrumb {
 	min-height: 32px;
