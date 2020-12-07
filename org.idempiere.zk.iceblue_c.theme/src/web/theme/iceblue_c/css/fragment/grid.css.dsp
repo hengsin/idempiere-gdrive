@@ -5,7 +5,7 @@
 }
 
 .z-grid tbody tr.grid-inactive-row td.row-indicator-selected {
-	background-image: url(${c:encodeURL('/theme/iceblue_c/images/EditRecord16.png')}) !important;
+	background-image: url(${c:encodeURL('~./theme/iceblue_c/images/EditRecord16.png')}) !important;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: 16px 16px;  
@@ -25,7 +25,7 @@
 
 .z-grid tbody tr.highlight td.row-indicator-selected {
 	background-color: #FFFFCC !important;
-	background-image: url(${c:encodeURL('/theme/iceblue_c/images/EditRecord16.png')}) !important;
+	background-image: url(${c:encodeURL('~./theme/iceblue_c/images/EditRecord16.png')}) !important;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: 16px 16px;  

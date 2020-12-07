@@ -63,7 +63,7 @@
 .z-toolbarbutton.small-toolbarbutton [class^="z-icon-"] {
 	font-size: 12px;
 }
-.z-toolbarbutton, .z-toolbarbutton .z-toolbarbutton-content {
+.z-toolbarbutton, .z-toolbarbutton .z-toolbarbutton-content {	
 	align-items: center;
 }
 .z-toolbar-content {
