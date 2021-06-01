@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package name="zul.billboard" language="xul/html" depends="zul.med" cacheable="false">
+	<widget name="Billboard" />
+			
+	<script src="ext/billboard.pkgd.js" />
+	<script src="ext/billboard.gauge.js" />		
+</package>

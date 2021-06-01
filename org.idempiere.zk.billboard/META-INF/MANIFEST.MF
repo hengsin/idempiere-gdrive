@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Billboard
+Bundle-SymbolicName: org.idempiere.zk.billboard
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: iDempiere
+Fragment-Host: org.adempiere.ui.zk;bundle-version="8.2.0"
+Automatic-Module-Name: org.idempiere.zk.billboard
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Export-Package: org.idempiere.zk.billboard,
+ web.js.zul.billboard.css
