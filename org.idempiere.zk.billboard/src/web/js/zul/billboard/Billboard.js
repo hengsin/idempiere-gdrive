@@ -92,15 +92,11 @@
 						
 						if (this.getType() == 'stacked_bar' || this.getType() == 'waterfall') {
 							seriesData[seriesIndex].push(categoryValue);
-							if (ticks.indexOf(categoryLabel) < 0) {
-								ticks.push(categoryLabel);
-							}
 						} else {
 							if (seriesData[seriesIndex].length == 0)
-								seriesData[seriesIndex].push(categoryLabel);
-							seriesData[seriesIndex].push(categoryValue);
+								seriesData[seriesIndex].push(seriesLabel);
+							seriesData[seriesIndex].push({category: categoryLabel, value: categoryValue});
 						}
-						
 					}
 					
 					var seriesLabel = new Array();
@@ -164,7 +160,7 @@
 				}
 				
 				// Horizontal or Vertical ?
-				if(this.getType() != 'pie' && this.getType() != 'dial' && this.getType() != 'ring') {
+				if(this.getType() != 'pie' && this.getType() != 'gauge' && this.getType() != 'donut') {
 					var axisRenderer = this.getTimeSeries() ? "timeseries" : "category";
 					
 					// Vertical
@@ -223,7 +219,8 @@
 				}
 				if (!nodata) {
 					var c = zk.$import('zul.billboard.Billboard');
-					bb.generate(c._renderers[wgt._type].render(wgt));
+					if (c._renderers[wgt._type])
+						bb.generate(c._renderers[wgt._type].render(wgt));
 				}
 			},
 

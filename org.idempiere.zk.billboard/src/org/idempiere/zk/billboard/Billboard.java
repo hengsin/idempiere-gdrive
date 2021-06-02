@@ -158,7 +158,6 @@ public class Billboard extends XulElement {
 	}
 	
 	public void service(AuRequest request, boolean everError) {
-		System.out.println(request.getCommand());
 		if (Events.ON_CLICK.equals(request.getCommand())) {
 			Events.postEvent("onClick", this, request.getData());
 		} else if ("onDataClick".equals(request.getCommand())) {

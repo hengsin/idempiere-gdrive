@@ -5,7 +5,7 @@ billboard.GaugeRenderer = function() {};
 billboard.GaugeRenderer.prototype.render = function(wgt) {
 	var columns = [wgt.getSeriesData()[0], wgt.getSeriesData()[1]];
 	var color = {};
-	var gauge = {};
+	var gauge = {units: "%"};
 	var rendererOptions = wgt._rendererOptions ? jq.evalJSON(wgt._rendererOptions) : null;
 	if (rendererOptions) {
 		if (rendererOptions["intervalColors"]) {
@@ -13,16 +13,18 @@ billboard.GaugeRenderer.prototype.render = function(wgt) {
 			rendererOptions["intervalColors"].forEach((x, i) => color["pattern"].push(x));
 		}
 		if (rendererOptions["intervals"]) {
-			color["threshold"] = new Array();
-			rendererOptions["intervals"].forEach((x, i) => color["threshold"].push(x));
+			color["threshold"] = {values: []};
+			rendererOptions["intervals"].forEach((x, i) => color["threshold"]["values"].push(x));
 		}
-		
+
+		/*			
 		if (rendererOptions["min"]) {
 			gauge["min"] = rendererOptions["min"];
 		}
 		if (rendererOptions["max"]) {
 			gauge["max"] = rendererOptions["max"];
 		}
+		*/
 		if (rendererOptions["background"]) {
 			gauge["background"] = rendererOptions["background"];
 		}
@@ -31,16 +33,7 @@ billboard.GaugeRenderer.prototype.render = function(wgt) {
 		bindto: "#"+wgt.$n().id, 
 		data: { 
 			columns: [columns], 
-			type: wgt._type,
-			onclick: function(d, e) {
-				wgt._dataClickTS = new Date().getTime();
-				wgt.fire("onDataClick", {
-					seriesIndex : d.x,
-					pointIndex : d.index,
-					data : d.value,
-					ticks : wgt.getTicks()
-				});
-			}
+			type: wgt._type
 		},
 		color: color,
 		gauge: gauge,

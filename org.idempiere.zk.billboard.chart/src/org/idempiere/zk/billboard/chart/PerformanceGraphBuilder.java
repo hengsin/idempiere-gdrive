@@ -243,6 +243,7 @@ public class PerformanceGraphBuilder {
 	private Billboard createBarChart(final GoalModel goalModel, int chartWidth, int chartHeight) {
 				
 		Billboard billboard = new Billboard();
+		billboard.setRenderdefer(500);
 		billboard.setType("bar");
 		CategoryModel chartModel = createCategoryModel(goalModel, false);
 		billboard.setModel(chartModel);
@@ -250,6 +251,10 @@ public class PerformanceGraphBuilder {
 				"; height: "+chartHeight+"px");
 		billboard.addEventListener("onDataClick", new ZoomListener(goalModel, chartModel.getCategories().toArray(new Comparable<?>[0])));
 		setupLocale(billboard);
+		if (goalModel.showTitle)
+			billboard.setTitle(goalModel.goal.getMeasure().getName());
+		billboard.setTickAxisLabel(goalModel.xAxisLabel);
+		billboard.setValueAxisLabel(goalModel.yAxisLabel);
 		return billboard;
 	}
 
