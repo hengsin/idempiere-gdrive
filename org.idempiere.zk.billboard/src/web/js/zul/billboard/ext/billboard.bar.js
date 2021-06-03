@@ -74,7 +74,7 @@ billboard.BarRenderer.prototype.render = function(wgt) {
 		    doNotHide: false,
 		    grouped: false,
 		    format: {
-		    	title: function(x) { return ""; },
+		    	title: function(x) { return categories[x]; },
 		        name: function(name, ratio, id, index) { return ""; },
 		        value: function(value, ratio, id, index) { return value; }
 		    }

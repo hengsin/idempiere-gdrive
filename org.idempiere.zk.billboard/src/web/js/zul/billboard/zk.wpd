@@ -8,4 +8,5 @@
 	<script src="ext/billboard.line.js" />
 	<script src="ext/billboard.pie.js" />
 	<script src="ext/billboard.donut.js" />
+	<script src="ext/billboard.area.js" />
 </package>
