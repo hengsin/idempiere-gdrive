@@ -5,4 +5,7 @@
 	<script src="ext/billboard.pkgd.js" />
 	<script src="ext/billboard.gauge.js" />		
 	<script src="ext/billboard.bar.js" />
+	<script src="ext/billboard.line.js" />
+	<script src="ext/billboard.pie.js" />
+	<script src="ext/billboard.donut.js" />
 </package>

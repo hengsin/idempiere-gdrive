@@ -65,8 +65,7 @@
 					}
 				} else if( this.getType() == 'pie' || this.getType() == 'donut') {
 					for ( var i = 0, len = data.length; i < len; i++) {
-						seriesData.push(data[i]['category']);
-						seriesData.push(data[i]['value']);
+						seriesData.push([data[i]['category'], data[i]['value']]);
 					}
 					
 					seriesData = [ seriesData ];

@@ -153,7 +153,7 @@ public class PerformanceGraphBuilder {
 		}
 		else if (X_PA_Goal.CHARTTYPE_RingChart.equals(goalModel.chartType))
 		{
-			return createRingChart(goalModel, chartWidth, chartHeight);
+			return createDonutChart(goalModel, chartWidth, chartHeight);
 		}
 		else if (X_PA_Goal.CHARTTYPE_WaterfallChart.equals(goalModel.chartType))
 		{
@@ -174,10 +174,14 @@ public class PerformanceGraphBuilder {
 		billboard.setStyle("width: " + chartWidth + "px" +
 				"; height: "+chartHeight+"px");
 		billboard.addEventListener("onDataClick", new ZoomListener(goalModel, chartModel.getCategories().toArray(new Comparable<?>[0])));
+		if (goalModel.showTitle)
+			billboard.setTitle(goalModel.goal.getMeasure().getName());
+		billboard.setTickAxisLabel(goalModel.xAxisLabel);
+		billboard.setValueAxisLabel(goalModel.yAxisLabel);
 		return billboard;
 	}
 
-	private Billboard createRingChart(GoalModel goalModel, int chartWidth,
+	private Billboard createDonutChart(GoalModel goalModel, int chartWidth,
 			int chartHeight) {
 		Billboard billboard = new Billboard();
 		billboard.setType("donut");
@@ -191,6 +195,8 @@ public class PerformanceGraphBuilder {
 				"; height: "+chartHeight+"px");
 		billboard.setLegend(true, true);
 		billboard.addEventListener("onDataClick", new ZoomListener(goalModel, chartModel.getCategories().toArray(new Comparable<?>[0])));
+		if (goalModel.showTitle)
+			billboard.setTitle(goalModel.goal.getMeasure().getName());
 		return billboard;
 	}
 
@@ -203,6 +209,10 @@ public class PerformanceGraphBuilder {
 		billboard.setStyle("width: " + chartWidth + "px" +
 				"; height: "+chartHeight+"px");
 		billboard.addEventListener("onDataClick", new ZoomListener(goalModel, chartModel.getCategories().toArray(new Comparable<?>[0])));
+		if (goalModel.showTitle)
+			billboard.setTitle(goalModel.goal.getMeasure().getName());
+		billboard.setTickAxisLabel(goalModel.xAxisLabel);
+		billboard.setValueAxisLabel(goalModel.yAxisLabel);
 		return billboard;
 	}
 
@@ -220,6 +230,10 @@ public class PerformanceGraphBuilder {
 		JSONObject options = new JSONObject();
 		options.put("numberRows", 1);
 		billboard.addLegendOptions("rendererOptions", options);
+		if (goalModel.showTitle)
+			billboard.setTitle(goalModel.goal.getMeasure().getName());
+		billboard.setTickAxisLabel(goalModel.xAxisLabel);
+		billboard.setValueAxisLabel(goalModel.yAxisLabel);
 		return billboard;
 	}
 
@@ -237,6 +251,8 @@ public class PerformanceGraphBuilder {
 				"; height: "+chartHeight+"px");
 		billboard.addEventListener("onDataClick", new ZoomListener(goalModel, chartModel.getCategories().toArray(new Comparable<?>[0])));
 		billboard.setLegend(true, true);
+		if (goalModel.showTitle)
+			billboard.setTitle(goalModel.goal.getMeasure().getName());
 		return billboard;
 	}
 

@@ -1,8 +1,8 @@
 var billboard = billboard || {};
 
-billboard.BarRenderer = function() {};
+billboard.LineRenderer = function() {};
 
-billboard.BarRenderer.prototype.render = function(wgt) {
+billboard.LineRenderer.prototype.render = function(wgt) {
 	var columns = [["data"]];
 	var categories = new Array();
 	wgt.getSeriesData().forEach((x, i) => { 
@@ -15,7 +15,7 @@ billboard.BarRenderer.prototype.render = function(wgt) {
 		});
 	});
 	var color = {};
-	var bar = {};
+	var line = {};
 	var background = {};
 	var rendererOptions = wgt._rendererOptions ? jq.evalJSON(wgt._rendererOptions) : null;
 	if (rendererOptions) {
@@ -68,7 +68,7 @@ billboard.BarRenderer.prototype.render = function(wgt) {
 			}
 		},
 		color: color,
-		bar: bar,
+		line: line,
 		tooltip: {
 			show: true,
 		    doNotHide: false,
@@ -112,5 +112,5 @@ billboard.BarRenderer.prototype.render = function(wgt) {
 	return model;
 };
 
-zul.billboard.Billboard._renderers["bar"] = new billboard.BarRenderer();
+zul.billboard.Billboard._renderers["line"] = new billboard.LineRenderer();
 		
