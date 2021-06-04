@@ -301,19 +301,7 @@ public class PerformanceGraphBuilder {
 	}
 
 	private CategoryModel createWaterfallModel(GoalModel goalModel) {
-		CategoryModel chartModel = new SimpleCategoryModel();
-		List<GraphColumn> list = goalModel.columnList;
-		double prevValue = 0;
-		for (int i = 0; i < list.size(); i++){
-			String series = goalModel.xAxisLabel;
-			double value = list.get(i).getValue();
-			if (i > 0) {
-				value = value - prevValue;
-			}
-			chartModel.setValue(series, list.get(i).getLabel(), value);
-			prevValue = list.get(i).getValue();
-		}
-		return chartModel;
+		return createCategoryModel(goalModel, false);
 	}
 	
 	private static class ZoomListener implements EventListener<Event> {

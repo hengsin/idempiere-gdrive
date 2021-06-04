@@ -89,13 +89,9 @@
 							seriesData[seriesIndex] = new Array();
 						}
 						
-						if (this.getType() == 'stacked_bar' || this.getType() == 'waterfall') {
-							seriesData[seriesIndex].push(categoryValue);
-						} else {
-							if (seriesData[seriesIndex].length == 0)
-								seriesData[seriesIndex].push(seriesLabel);
-							seriesData[seriesIndex].push({category: categoryLabel, value: categoryValue});
-						}
+						if (seriesData[seriesIndex].length == 0)
+							seriesData[seriesIndex].push(seriesLabel);
+						seriesData[seriesIndex].push({category: categoryLabel, value: categoryValue});
 					}
 					
 					var seriesLabel = new Array();

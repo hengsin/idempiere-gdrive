@@ -9,4 +9,5 @@
 	<script src="ext/billboard.pie.js" />
 	<script src="ext/billboard.donut.js" />
 	<script src="ext/billboard.area.js" />
+	<script src="ext/billboard.waterfall.js" />
 </package>
