@@ -178,6 +178,7 @@ public class PerformanceGraphBuilder {
 			billboard.setTitle(goalModel.goal.getMeasure().getName());
 		billboard.setTickAxisLabel(goalModel.xAxisLabel);
 		billboard.setValueAxisLabel(goalModel.yAxisLabel);
+		buildRendererOptions(billboard, goalModel);
 		return billboard;
 	}
 
@@ -213,6 +214,7 @@ public class PerformanceGraphBuilder {
 			billboard.setTitle(goalModel.goal.getMeasure().getName());
 		billboard.setTickAxisLabel(goalModel.xAxisLabel);
 		billboard.setValueAxisLabel(goalModel.yAxisLabel);
+		buildRendererOptions(billboard, goalModel);
 		return billboard;
 	}
 
@@ -234,6 +236,7 @@ public class PerformanceGraphBuilder {
 			billboard.setTitle(goalModel.goal.getMeasure().getName());
 		billboard.setTickAxisLabel(goalModel.xAxisLabel);
 		billboard.setValueAxisLabel(goalModel.yAxisLabel);
+		buildRendererOptions(billboard, goalModel);
 		return billboard;
 	}
 
@@ -271,6 +274,7 @@ public class PerformanceGraphBuilder {
 			billboard.setTitle(goalModel.goal.getMeasure().getName());
 		billboard.setTickAxisLabel(goalModel.xAxisLabel);
 		billboard.setValueAxisLabel(goalModel.yAxisLabel);
+		buildRendererOptions(billboard, goalModel);
 		return billboard;
 	}
 
@@ -302,6 +306,41 @@ public class PerformanceGraphBuilder {
 
 	private CategoryModel createWaterfallModel(GoalModel goalModel) {
 		return createCategoryModel(goalModel, false);
+	}
+	
+	private void buildRendererOptions(Billboard billboard, GoalModel goalModel) {
+		List<Double> intervals = new ArrayList<Double>();
+		List<String> intervalColors = new ArrayList<String>();
+		MColorSchema colorSchema = goalModel.goal.getColorSchema();
+		int upperBound = 0;
+		int [] rangeBounds = new int[]{colorSchema.getMark1Percent(), colorSchema.getMark2Percent(), colorSchema.getMark3Percent(), colorSchema.getMark4Percent()};
+		for (int rangeBound : rangeBounds)
+		{
+			if (rangeBound > upperBound) 
+			{
+				if (rangeBound == 9999)
+				{
+					upperBound = (int) Math.floor(upperBound*1.5);
+					break;
+				}
+				else
+				{
+					upperBound = rangeBound;
+				}
+			}
+		}
+		int rangeLo = 0;
+		for (int rangeHi : rangeBounds){
+		    if (rangeHi==9999)
+		    	rangeHi = (int) Math.floor(rangeLo*1.5);
+		    if (rangeLo < rangeHi) {         
+		    	intervals.add(Double.valueOf(rangeHi));
+				intervalColors.add("#"+ZkCssHelper.createHexColorString(colorSchema.getColor(rangeHi)));
+		    	rangeLo = rangeHi;
+		    }
+		}
+		billboard.addRendererOptions("intervals", intervals.toArray(new Double[0]));		
+		billboard.addRendererOptions("intervalColors", intervalColors.toArray(new String[0]));
 	}
 	
 	private static class ZoomListener implements EventListener<Event> {

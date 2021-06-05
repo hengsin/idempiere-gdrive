@@ -78,11 +78,6 @@ billboard.WaterfallRenderer.prototype.render = function(wgt) {
 		tooltip: {
 			show: true,
 		    doNotHide: false,
-		    format: {
-		    	title: function(x) { return categories[x]; },
-		        name: function(name, ratio, id, index) { return ""; },
-		        value: function(value, ratio, id, index) { return value; }
-		    },
 			contents: function(d, defaultTitleFormat, defaultValueFormat, color) {
 				var c = d[0];
 				var h = '<table class="bb-tooltip"><tbody><tr><th>';

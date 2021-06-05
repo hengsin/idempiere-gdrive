@@ -73,10 +73,13 @@ billboard.BarRenderer.prototype.render = function(wgt) {
 			show: true,
 		    doNotHide: false,
 		    grouped: false,
-		    format: {
-		    	title: function(x) { return categories[x]; },
-		        name: function(name, ratio, id, index) { return ""; },
-		        value: function(value, ratio, id, index) { return value; }
+		    contents: function(d, defaultTitleFormat, defaultValueFormat, color) {
+				var c = d[0];
+				var h = '<table class="bb-tooltip"><tbody><tr><th>';
+				h = h + categories[c.x];
+				h = h + '</th></tr><tr class="bb-tooltip-name-data"><td class="value">';
+				h = h + c.value + '</td></tr></tbody></table>';
+		        return h;
 		    }
 		},
 		legend: {show: false},
