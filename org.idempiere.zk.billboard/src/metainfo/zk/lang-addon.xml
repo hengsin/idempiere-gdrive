@@ -6,7 +6,7 @@
     <language-name>xul/html</language-name>
   	<version>
 		<version-class>org.idempiere.zk.billboard.Version</version-class>
-		<version-uid>1.0.0</version-uid>
+		<version-uid>1.0.0.20210605</version-uid>
 	</version>   
 	<component>
 		<component-name>billboard</component-name>
