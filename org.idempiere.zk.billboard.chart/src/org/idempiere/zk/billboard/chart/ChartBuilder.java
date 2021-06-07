@@ -67,6 +67,7 @@ public class ChartBuilder {
 
 	private final static CLogger log = CLogger.getCLogger(ChartBuilder.class);
 	protected final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+	protected final SimpleDateFormat tsDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	
 	private MChart mChart;
 	private HashMap<String,MQuery> queries;
@@ -281,7 +282,7 @@ public class ChartBuilder {
 					Date date = rs.getDate(2);
 					BigDecimal tsvalue = rs.getBigDecimal(1);
 					xy.addValue(seriesName, date.getTime(), tsvalue);
-					key = dateFormat.format(date);
+					key = tsDateFormat.format(date);
 					queryWhere += DB.TO_DATE(new Timestamp(date.getTime()));
 				}
 				else {
@@ -415,7 +416,7 @@ public class ChartBuilder {
 				Number category = xymodel.getX(series, i);
 				Date date = new Date(category.longValue());
 				String categoryLabel = null;
-				categoryLabel = dateFormat.format(date);
+				categoryLabel = tsDateFormat.format(date);
 				Number oldValue = model.getValue(series, categoryLabel);
 				if (oldValue != null)
 					value = oldValue.doubleValue() + value.doubleValue();

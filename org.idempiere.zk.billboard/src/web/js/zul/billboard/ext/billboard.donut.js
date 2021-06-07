@@ -31,7 +31,7 @@ billboard.DonutRenderer.prototype.render = function(wgt) {
 			onclick: function(d, e) {
 				wgt._dataClickTS = new Date().getTime();
 				wgt.fire("onDataClick", {
-					seriesIndex : d.x,
+					seriesIndex : 0,
 					pointIndex : d.index,
 					data : d.value,
 					ticks : wgt.getTicks()

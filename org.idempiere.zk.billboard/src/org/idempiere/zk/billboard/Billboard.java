@@ -69,7 +69,7 @@ public class Billboard extends XulElement {
 	private Map<String, Object> _legend;
 	private boolean timeSeries = false;
 	private String timeSeriesInterval = "1 months"; //"1 days", "1 year", "1 weeks"
-	private String timeSeriesFormat = "%b"; //%Y - year, %b - month, %#d - day
+	private String timeSeriesFormat = "%b %Y"; //%Y - year, %m - month, %#d - day
 	private String timeSeriesMin = null;
 	private char thoudsandsSeparator = Character.MAX_VALUE;
 	private char decimalMark = Character.MAX_VALUE;

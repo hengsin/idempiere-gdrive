@@ -48,8 +48,11 @@ billboard.BarRenderer.prototype.render = function(wgt) {
 			categories.forEach((v, i) => x["categories"].push(v));
 		}
 	} else if (x["type"] == "timeseries") {
-		x["tick"]["values"] = [];
-		wgt.getSeries().forEach((s, i) => x["tick"]["values"].push(s.label));
+		var ts = new Array();
+		ts.push("x");
+		categories.forEach((s, i) => ts.push(s));
+		columns.push(ts);
+		x["tick"]["fit"] = true;
 	}
 	
 	var model = { 
@@ -60,7 +63,7 @@ billboard.BarRenderer.prototype.render = function(wgt) {
 			onclick: function(d, e) {
 				wgt._dataClickTS = new Date().getTime();
 				wgt.fire("onDataClick", {
-					seriesIndex : d.x,
+					seriesIndex : 0,
 					pointIndex : d.index,
 					data : d.value,
 					ticks : wgt.getTicks()
@@ -76,7 +79,7 @@ billboard.BarRenderer.prototype.render = function(wgt) {
 		    contents: function(d, defaultTitleFormat, defaultValueFormat, color) {
 				var c = d[0];
 				var h = '<table class="bb-tooltip"><tbody><tr><th>';
-				h = h + categories[c.x];
+				h = h + defaultTitleFormat(c.x);
 				h = h + '</th></tr><tr class="bb-tooltip-name-data"><td class="value">';
 				h = h + c.value + '</td></tr></tbody></table>';
 		        return h;
@@ -106,6 +109,9 @@ billboard.BarRenderer.prototype.render = function(wgt) {
 		  }
 		}
 	};
+	if (x["type"] == "timeseries") {
+		model["data"]["x"] = "x";
+	}
 	if (wgt.getTitle())
 		model["title"] = {text: wgt.getTitle()};
 	if (wgt.getTickAxisLabel())
