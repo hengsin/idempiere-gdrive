@@ -54,6 +54,7 @@ billboard.LineRenderer.prototype.render = function(wgt) {
 		columns.push(ts);
 		x["tick"]["fit"] = true;
 	}
+	x["clipPath"] = false;
 	
 	var model = { 
 		bindto: "#"+wgt.$n().id, 
@@ -107,7 +108,10 @@ billboard.LineRenderer.prototype.render = function(wgt) {
 		  lines: {
 		     front: false
 		  }
-		}
+		},
+		padding: {
+			right: 30
+		}		
 	};
 	if (x["type"] == "timeseries") {
 		model["data"]["x"] = "x";
