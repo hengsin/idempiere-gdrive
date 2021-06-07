@@ -233,10 +233,6 @@ public class ChartRendererServiceImpl implements IChartRendererService {
 					minDate = startDate;
 			}
 			
-			if (minDate != null)
-			{
-				billboard.setTimeSeriesMin(builder.dateFormat.format(minDate));
-			}
 		}
 		
 		parent.getChildren().clear();

@@ -49,11 +49,11 @@ import org.zkoss.zul.impl.XulElement;
  * @author hengsin
  *
  */
-public class Billboard extends XulElement {
+public class Billboard extends XulElement {	
 	/**
-	 * 
+	 * generated serial id
 	 */
-	private static final long serialVersionUID = -6862660124331454947L;
+	private static final long serialVersionUID = -3888636406033151303L;
 
 	// Must
 	private ChartModel _model;
@@ -64,13 +64,11 @@ public class Billboard extends XulElement {
 	private String _title = "";
 	private String _type = "line";
 	private String _orient = "vertical";
-	private boolean _cursor = false;
 	private Map<String, Object> _rendererOptions;
 	private Map<String, Object> _legend;
 	private boolean timeSeries = false;
 	private String timeSeriesInterval = "1 months"; //"1 days", "1 year", "1 weeks"
 	private String timeSeriesFormat = "%b %Y"; //%Y - year, %m - month, %#d - day
-	private String timeSeriesMin = null;
 	private char thoudsandsSeparator = Character.MAX_VALUE;
 	private char decimalMark = Character.MAX_VALUE;
 	private String tickAxisLabel = null;
@@ -78,13 +76,15 @@ public class Billboard extends XulElement {
 	private String[] seriesColors = null;
 	private int xAxisAngle = 0;
 	
+	public static final String ON_DATA_CLICK_EVENT = "onDataClick";
+	
 	// Event Listener
 	static {
         addClientEvent(Billboard.class, Events.ON_CLICK, CE_IMPORTANT);
-        addClientEvent(Billboard.class, "onDataClick", CE_IMPORTANT);
+        addClientEvent(Billboard.class, ON_DATA_CLICK_EVENT, CE_IMPORTANT);
     }	
 
-	// super//
+	@Override
 	protected void renderProperties(org.zkoss.zk.ui.sys.ContentRenderer renderer)
 			throws java.io.IOException {
 		super.renderProperties(renderer);
@@ -92,7 +92,6 @@ public class Billboard extends XulElement {
 		render(renderer, "type", _type);
 		render(renderer, "title", _title);
 		render(renderer, "orient", _orient);
-		render(renderer, "cursor", _cursor);
 		render(renderer, "timeSeries", timeSeries);
 		render(renderer, "xAxisAngle", xAxisAngle);
 		if (timeSeries) {
@@ -100,8 +99,6 @@ public class Billboard extends XulElement {
 				render(renderer, "timeSeriesInterval", timeSeriesInterval);
 			if (timeSeriesFormat != null)
 				render(renderer, "timeSeriesFormat", timeSeriesFormat);
-			if (timeSeriesMin != null)
-				render(renderer, "timeSeriesMin", timeSeriesMin);
 		}
 		
 		String model = toJSONArray(transferToJSONObject(getModel()));
@@ -157,11 +154,12 @@ public class Billboard extends XulElement {
 		return jData;
 	}
 	
+	@Override
 	public void service(AuRequest request, boolean everError) {
 		if (Events.ON_CLICK.equals(request.getCommand())) {
-			Events.postEvent("onClick", this, request.getData());
-		} else if ("onDataClick".equals(request.getCommand())) {
-			Events.postEvent("onDataClick", this, request.getData());
+			Events.postEvent(Events.ON_CLICK, this, request.getData());
+		} else if (ON_DATA_CLICK_EVENT.equals(request.getCommand())) {
+			Events.postEvent(ON_DATA_CLICK_EVENT, this, request.getData());
 		} else {
 			super.service(request, everError);
 		}
@@ -175,10 +173,18 @@ public class Billboard extends XulElement {
 		}
 	}
 
+	/**
+	 * 
+	 * @return {@link ChartModel}
+	 */
 	public ChartModel getModel() {
 		return _model;
 	}
 
+	/**
+	 * 
+	 * @param model
+	 */
 	public void setModel(ChartModel model) {
 		if (_model != model) {
 			if (_model != null)
@@ -194,10 +200,18 @@ public class Billboard extends XulElement {
 		}
 	}
 
+	/**
+	 * 
+	 * @return chart title
+	 */
 	public String getTitle() {
 		return _title;
 	}
 
+	/**
+	 * set chart title
+	 * @param title
+	 */
 	public void setTitle(String title) {
 		if(!title.equals(this._title)) {
 			this._title = title;
@@ -206,10 +220,18 @@ public class Billboard extends XulElement {
 		}
 	}
 
+	/**
+	 * 
+	 * @return chart type
+	 */
 	public String getType() {
 		return _type;
 	}
 
+	/**
+	 * set chart type
+	 * @param type
+	 */
 	public void setType(String type) {
 		if(!type.equals(this._type)) {
 			if(isValid(type)) {
@@ -220,10 +242,18 @@ public class Billboard extends XulElement {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return chart orientation (horizontal or vertical)
+	 */
 	public String getOrient() {
 		return _orient;
 	}
 
+	/**
+	 * set chart orientation
+	 * @param orient
+	 */
 	public void setOrient(String orient) {
 		if(!orient.equals(this._orient)) {
 			this._orient = orient;
@@ -232,24 +262,22 @@ public class Billboard extends XulElement {
 		}
 	}
 
-	public Boolean getCursor() {
-		return _cursor;
-	}
-
-	public void setCursor(Boolean cursor) {
-		if(cursor != this._cursor) {
-			this._cursor = cursor;
-			smartUpdate("cursor", _cursor);
-			invalidate();
-		}
-	}
-
+	/**
+	 * 
+	 * @param key
+	 * @param value
+	 */
 	public void addRendererOptions(String key, Object value) {
 		if (_rendererOptions == null)
 			_rendererOptions = new HashMap<String, Object>();
 		_rendererOptions.put(key, value);
 	}
 	
+	/**
+	 * 
+	 * @param key
+	 * @param value
+	 */
 	public void addLegendOptions(String key, Object value) {
 		if (_legend == null)
 			_legend = new HashMap<String, Object>();
@@ -317,8 +345,9 @@ public class Billboard extends XulElement {
 	    return sb.toString().replaceAll("\\\\", "");
 	}
 	
+	//supported chart type
 	private static final List<Object> _VALID_TYPES = Arrays.asList(new Object[] {
-		"pie", "line", "bar", "area", "stacked_bar", "stackedcolumn_bar", "gauge", "donut", "waterfall"
+		"pie", "line", "bar", "area", "stacked_bar", "stacked_area", "gauge", "donut", "waterfall"
 	});
 	
 	private static boolean isValid(String type) {
@@ -348,6 +377,11 @@ public class Billboard extends XulElement {
 		this.decimalMark = decimalMark;
 	}
 	
+	/**
+	 * 
+	 * @param show
+	 * @param insideGrid
+	 */
 	public void setLegend(boolean show, boolean insideGrid) {
 		if (show) {
 			addLegendOptions("show", Boolean.TRUE);
@@ -359,52 +393,84 @@ public class Billboard extends XulElement {
 		}
 	}
 
+	/**
+	 * 
+	 * @return x axis label
+	 */
 	public String getTickAxisLabel() {
 		return tickAxisLabel;
 	}
 
+	/**
+	 * set x axis label
+	 * @param tickAxisLabel
+	 */
 	public void setTickAxisLabel(String tickAxisLabel) {
 		this.tickAxisLabel = tickAxisLabel;
 	}
 
+	/**
+	 * 
+	 * @return y axis label
+	 */
 	public String getValueAxisLabel() {
 		return valueAxisLabel;
 	}
 
+	/**
+	 * set y axis label
+	 * @param valueAxisLabel
+	 */
 	public void setValueAxisLabel(String valueAxisLabel) {
 		this.valueAxisLabel = valueAxisLabel;
 	}
 
+	/**
+	 * 
+	 * @return true if it is time series chart
+	 */
 	public boolean isTimeSeries() {
 		return timeSeries;
 	}
-
+	
+	/**
+	 * 
+	 * @param _timeSeries
+	 */
 	public void setTimeSeries(boolean _timeSeries) {
 		this.timeSeries = _timeSeries;
 	}
 
+	/**
+	 * 
+	 * @return time series interval
+	 */
 	public String getTimeSeriesInterval() {
 		return timeSeriesInterval;
 	}
 
+	/**
+	 * 
+	 * @param _timeSeriesInterval
+	 */
 	public void setTimeSeriesInterval(String _timeSeriesInterval) {
 		this.timeSeriesInterval = _timeSeriesInterval;
 	}
 
+	/**
+	 * 
+	 * @return time series format
+	 */
 	public String getTimeSeriesFormat() {
 		return timeSeriesFormat;
 	}
 
+	/**
+	 * set time series format
+	 * @param timeSeriesFormat
+	 */
 	public void setTimeSeriesFormat(String timeSeriesFormat) {
 		this.timeSeriesFormat = timeSeriesFormat;
-	}
-
-	public String getTimeSeriesMin() {
-		return timeSeriesMin;
-	}
-
-	public void setTimeSeriesMin(String timeSeriesMin) {
-		this.timeSeriesMin = timeSeriesMin;
 	}
 
 	public String[] getSeriesColors() {
@@ -415,7 +481,7 @@ public class Billboard extends XulElement {
 		this.seriesColors = seriesColors;
 	}
 
-	public int getTickAngle() {
+	public int getXAxisAngle() {
 		return xAxisAngle;
 	}
 

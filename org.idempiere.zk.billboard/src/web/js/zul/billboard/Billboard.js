@@ -9,7 +9,6 @@
 			
 			_cursor : false,
 			_highlighter : true,
-			_stackSeries : false,
 			_dataClickTS : 0,
 			
 			$define : {
@@ -37,7 +36,6 @@
 				timeSeries: null,
 				timeSeriesInterval: null,
 				timeSeriesFormat: null,
-				timeSeriesMin: null,
 				xAxisAngle: null				
 			},
 			
@@ -117,35 +115,6 @@
 				
 				seriesDefaults.rendererOptions = {};
 				// Start chart prepare
-				if(this.isBarType()) {											
-					// Stack
-					if(this._type == 'stacked_bar') {
-						this._stackSeries = true;
-					}
-					
-					if(this._type == 'waterfall') {
-						seriesDefaults.rendererOptions = {
-							waterfall: true,									
-							showDataLabels: true
-						};							
-						seriesDefaults.pointLabels = {
-			                show: true,
-			                hideZeros: true,
-			                formatString: '%\'#.2f'
-			            };
-					}		
-					seriesDefaults.breakOnNull = true;
-				} else if(this.getType() == 'area') {
-					this.stackSeries = true;
-					seriesDefaults.fill = true;
-					seriesDefaults.fillAndStroke=true;
-					seriesDefaults.fillToZero=true;
-				} else if(this.getType() == 'pie') {
-					seriesDefaults.rendererOptions.showDataLabels = true;
-				} else if(this.getType() == 'donut') {
-					seriesDefaults.rendererOptions.showDataLabels = true;								
-				}
-
 				if (this.getRendererOptions()) {						
 					var options = jq.evalJSON(this.getRendererOptions());
 					if (seriesDefaults.rendererOptions)
@@ -166,7 +135,6 @@
 					if (this.getTimeSeries()) {
 						axes.xaxis.tickInterval = this.getTimeSeriesInterval();
 						axes.xaxis.tickOptions = {formatString: this.getTimeSeriesFormat()};
-						axes.xaxis.min = this.getTimeSeriesMin();
 					} 
 					if (this.getXAxisAngle() != 0) {
 						if (axes.xaxis.tickOptions) {

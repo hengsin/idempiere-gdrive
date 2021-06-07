@@ -510,7 +510,7 @@ public class ChartBuilder {
 	}
 
 	private Billboard createStackedAreaChart() {
-		Billboard billboard = newBillboard("area");
+		Billboard billboard = newBillboard("stacked_area");
 		billboard.setModel(getCategoryModel());
 		return billboard;
 	}
