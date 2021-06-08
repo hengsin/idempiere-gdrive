@@ -48,7 +48,6 @@ import org.compiere.util.DB;
 import org.compiere.util.Env;
 import org.compiere.util.Util;
 import org.idempiere.zk.billboard.Billboard;
-import org.zkoss.json.JSONObject;
 import org.zkoss.zul.CategoryModel;
 import org.zkoss.zul.ChartModel;
 import org.zkoss.zul.PieModel;
@@ -66,7 +65,6 @@ import org.zkoss.zul.XYModel;
 public class ChartBuilder {
 
 	private final static CLogger log = CLogger.getCLogger(ChartBuilder.class);
-	protected final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	protected final SimpleDateFormat tsDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	
 	private MChart mChart;
@@ -393,7 +391,7 @@ public class ChartBuilder {
 				Number category = xymodel.getX(series, i);
 				Date date = new Date(category.longValue());
 				String categoryLabel = null;
-				categoryLabel = dateFormat.format(date);
+				categoryLabel = tsDateFormat.format(date);
 				Number oldValue = model.getValue(series, categoryLabel);
 				if (oldValue != null)
 					value = oldValue.doubleValue() + value.doubleValue();
@@ -454,16 +452,12 @@ public class ChartBuilder {
 		Billboard billboard = new Billboard();
 		if (mChart.isDisplayLegend()) {
 			billboard.setLegend(true, false);
-			billboard.addLegendOptions("location", "s");
-			JSONObject options = new JSONObject();
-			options.put("numberRows", 1);
-			billboard.addLegendOptions("rendererOptions", options);
+			billboard.addLegendOptions("location", "bottom"); //bottom, right
 		}
 		billboard.setTickAxisLabel(mChart.getDomainLabel());
 		billboard.setValueAxisLabel(mChart.getRangeLabel());
 		billboard.setTitle(mChart.getName());
 		billboard.setType(type);
-		billboard.setXAxisAngle(-45);
 		return billboard;
 	}
 
@@ -486,6 +480,10 @@ public class ChartBuilder {
 	private Billboard createBarChart() {
 		Billboard billboard = newBillboard("bar");
 		billboard.setModel(getCategoryModel());
+		if (MChart.CHARTORIENTATION_Vertical.equals(mChart.getChartOrientation()))
+			billboard.setOrient(Billboard.VERTICAL_ORIENTATION);
+		else if (MChart.CHARTORIENTATION_Horizontal.equals(mChart.getChartOrientation()))
+			billboard.setOrient(Billboard.HORIZONTAL_ORIENTATION);
 		return billboard;
 	}
 
@@ -496,6 +494,10 @@ public class ChartBuilder {
 	private Billboard createStackedBarChart() {
 		Billboard billboard = newBillboard("stacked_bar");
 		billboard.setModel(getCategoryModel());
+		if (MChart.CHARTORIENTATION_Vertical.equals(mChart.getChartOrientation()))
+			billboard.setOrient(Billboard.VERTICAL_ORIENTATION);
+		else if (MChart.CHARTORIENTATION_Horizontal.equals(mChart.getChartOrientation()))
+			billboard.setOrient(Billboard.HORIZONTAL_ORIENTATION);
 		return billboard;
 	}
 

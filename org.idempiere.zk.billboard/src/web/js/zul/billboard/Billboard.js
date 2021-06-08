@@ -31,8 +31,6 @@
 				orient : null,
 				rendererOptions: null,
 				legend: null,
-				thoudsandsSeparator: null,
-				decimalMark: null,
 				timeSeries: null,
 				timeSeriesInterval: null,
 				timeSeriesFormat: null,
@@ -145,7 +143,7 @@
 							};
 						}
 					}
-					axes.yaxis = { autoscale : true, tickOptions: {formatString: '%\'#.2f'}};
+					axes.yaxis = {};
 					if (this.getTickAxisLabel()) {
 						axes.xaxis.label = this.getTickAxisLabel(); 
 					}
@@ -182,8 +180,44 @@
 				}
 				if (!nodata) {
 					var c = zk.$import('zul.billboard.Billboard');
-					if (c._renderers[wgt._type])
-						bb.generate(c._renderers[wgt._type].render(wgt));
+					if (c._renderers[wgt._type]) {
+						var model = c._renderers[wgt._type].render(wgt);
+						if (legend) {
+							if (legend.show == true) {
+								model.legend.show = true;
+							} else if (legend.show == false) {
+								model.legend.show = true;
+							}
+							if (legend.placement) {
+								if (legend.placement == "insideGrid") {
+									model.legend.position = 'inset';
+								} else if (legend.placement == "outsideGrid") {
+									if (legend.location)
+										model.legend.position = legend.location;
+									else
+										model.legend.position = 'bottom';
+								}
+							}
+						}
+						if (seriesColors) {
+							if (model.data.groups) {
+								var grparr = model.data.groups[0];
+								var colors = {};
+								for(var i = 0; i < seriesColors.length && i < grparr.length; i++) {
+									colors[grparr[i]] = seriesColors[i];
+								}
+								model.data["colors"] = colors;
+							} else if (wgt.getSeries()) {
+								var colors = {};
+								var seriesarr = wgt.getSeries();
+								for(var i = 0; i < seriesColors.length && i < seriesarr.length; i++) {
+									colors[seriesarr[i]] = seriesColors[i];
+								}
+								model.data["colors"] = colors;
+							}
+						}
+						var chart = bb.generate(model);						
+					}
 				}
 			},
 

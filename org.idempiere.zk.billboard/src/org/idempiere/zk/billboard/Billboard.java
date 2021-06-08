@@ -69,14 +69,15 @@ public class Billboard extends XulElement {
 	private boolean timeSeries = false;
 	private String timeSeriesInterval = "1 months"; //"1 days", "1 year", "1 weeks"
 	private String timeSeriesFormat = "%b %Y"; //%Y - year, %m - month, %#d - day
-	private char thoudsandsSeparator = Character.MAX_VALUE;
-	private char decimalMark = Character.MAX_VALUE;
 	private String tickAxisLabel = null;
 	private String valueAxisLabel = null;
 	private String[] seriesColors = null;
 	private int xAxisAngle = 0;
 	
 	public static final String ON_DATA_CLICK_EVENT = "onDataClick";
+	
+	public static final String VERTICAL_ORIENTATION = "vertical";
+	public static final String HORIZONTAL_ORIENTATION = "horizontal";
 	
 	// Event Listener
 	static {
@@ -112,13 +113,6 @@ public class Billboard extends XulElement {
 		if (_legend != null && !_legend.isEmpty()) {
 			JSONObject jData = mapToJSON(_legend);
 			render(renderer, "legend", jData.toString());
-		}
-		
-		if (thoudsandsSeparator != Character.MAX_VALUE) {
-			render(renderer, "thoudsandsSeparator", thoudsandsSeparator);
-		}
-		if (decimalMark != Character.MAX_VALUE) {
-			render(renderer, "decimalMark", decimalMark);
 		}
 		
 		if (tickAxisLabel != null)
@@ -361,22 +355,6 @@ public class Billboard extends XulElement {
 		return (this._zclass != null ? this._zclass : "z-billboard");
 	}
 
-	public char getThoudsandsSeparator() {
-		return thoudsandsSeparator;
-	}
-
-	public void setThoudsandsSeparator(char thoudsandsSeparator) {
-		this.thoudsandsSeparator = thoudsandsSeparator;
-	}
-
-	public char getDecimalMark() {
-		return decimalMark;
-	}
-
-	public void setDecimalMark(char decimalMark) {
-		this.decimalMark = decimalMark;
-	}
-	
 	/**
 	 * 
 	 * @param show

@@ -25,8 +25,6 @@
 package org.idempiere.zk.billboard.chart;
 
 import java.awt.Font;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -40,8 +38,6 @@ import org.compiere.model.MColorSchema;
 import org.compiere.model.MGoal;
 import org.compiere.model.MQuery;
 import org.compiere.model.X_PA_Goal;
-import org.compiere.util.DisplayType;
-import org.compiere.util.Env;
 import org.idempiere.zk.billboard.Billboard;
 import org.zkoss.json.JSONObject;
 import org.zkoss.zk.ui.event.Event;
@@ -178,6 +174,7 @@ public class PerformanceGraphBuilder {
 			billboard.setTitle(goalModel.goal.getMeasure().getName());
 		billboard.setTickAxisLabel(goalModel.xAxisLabel);
 		billboard.setValueAxisLabel(goalModel.yAxisLabel);
+		billboard.setLegend(false, false);
 		buildRendererOptions(billboard, goalModel);
 		return billboard;
 	}
@@ -214,6 +211,7 @@ public class PerformanceGraphBuilder {
 			billboard.setTitle(goalModel.goal.getMeasure().getName());
 		billboard.setTickAxisLabel(goalModel.xAxisLabel);
 		billboard.setValueAxisLabel(goalModel.yAxisLabel);
+		billboard.setLegend(false, false);
 		buildRendererOptions(billboard, goalModel);
 		return billboard;
 	}
@@ -222,16 +220,12 @@ public class PerformanceGraphBuilder {
 			int chartHeight) {
 		Billboard billboard = new Billboard();
 		billboard.setType("area");
-		CategoryModel chartModel = createCategoryModel(goalModel, false);
+		CategoryModel chartModel = createCategoryModel(goalModel, true);
 		billboard.setModel(chartModel);
 		billboard.setStyle("width: " + chartWidth + "px" +
 				"; height: "+chartHeight+"px");
 		billboard.addEventListener("onDataClick", new ZoomListener(goalModel, chartModel.getCategories().toArray(new Comparable<?>[0])));
-		billboard.setLegend(true, false);
-		billboard.addLegendOptions("location", "s");
-		JSONObject options = new JSONObject();
-		options.put("numberRows", 1);
-		billboard.addLegendOptions("rendererOptions", options);
+		billboard.setLegend(false, false);
 		if (goalModel.showTitle)
 			billboard.setTitle(goalModel.goal.getMeasure().getName());
 		billboard.setTickAxisLabel(goalModel.xAxisLabel);
@@ -264,29 +258,20 @@ public class PerformanceGraphBuilder {
 		Billboard billboard = new Billboard();
 		billboard.setRenderdefer(500);
 		billboard.setType("bar");
-		CategoryModel chartModel = createCategoryModel(goalModel, false);
+		CategoryModel chartModel = createCategoryModel(goalModel, true);
 		billboard.setModel(chartModel);
 		billboard.setStyle("width: " + chartWidth + "px" +
 				"; height: "+chartHeight+"px");
 		billboard.addEventListener("onDataClick", new ZoomListener(goalModel, chartModel.getCategories().toArray(new Comparable<?>[0])));
-		setupLocale(billboard);
 		if (goalModel.showTitle)
 			billboard.setTitle(goalModel.goal.getMeasure().getName());
 		billboard.setTickAxisLabel(goalModel.xAxisLabel);
 		billboard.setValueAxisLabel(goalModel.yAxisLabel);
+		billboard.setLegend(false, false);
 		buildRendererOptions(billboard, goalModel);
 		return billboard;
 	}
 
-	private void setupLocale(Billboard billboard) {
-		DecimalFormat format = DisplayType.getNumberFormat(DisplayType.Amount, Env.getLanguage(Env.getCtx()));
-		DecimalFormatSymbols symbols = format.getDecimalFormatSymbols();
-		char decimalSeparator = symbols.getDecimalSeparator();
-		char groupingSeparator = symbols.getGroupingSeparator();
-		billboard.setThoudsandsSeparator(groupingSeparator);
-		billboard.setDecimalMark(decimalSeparator);
-	}
-	
 	private CategoryModel createCategoryModel(GoalModel goalModel, boolean linear) {
 		CategoryModel chartModel = new SimpleCategoryModel();
 		List<GraphColumn> list = goalModel.columnList;
@@ -305,7 +290,7 @@ public class PerformanceGraphBuilder {
 	}
 
 	private CategoryModel createWaterfallModel(GoalModel goalModel) {
-		return createCategoryModel(goalModel, false);
+		return createCategoryModel(goalModel, true);
 	}
 	
 	private void buildRendererOptions(Billboard billboard, GoalModel goalModel) {

@@ -3,14 +3,18 @@ var billboard = billboard || {};
 billboard.LineRenderer = function() {};
 
 billboard.LineRenderer.prototype.render = function(wgt) {
-	var columns = [["data"]];
+	var columns = [];
 	var categories = new Array();
 	wgt.getSeriesData().forEach((x, i) => { 
 		x.forEach((y, j) => {
 			if (y.category) {
-				columns[0].push(y.value);
+				columns[columns.length-1].push(y.value);
 				if (!categories.indexOf[y.category])
 					categories.push(y.category);
+			} else {
+				var values = new Array();
+				columns.push(values);
+				values.push(y);
 			}
 		});
 	});
@@ -33,7 +37,10 @@ billboard.LineRenderer.prototype.render = function(wgt) {
 		}
 	}
 	var x = {tick: {}};
+	var rotated = false;
 	var axes = wgt.getAxes();
+	if (axes.rotated)
+		rotated = axes.rotated;
 	if (axes.xaxis.renderer == "timeseries") {
 		x["type"] = "timeseries";
 		if (axes.xaxis.tickOptions) {
@@ -55,6 +62,13 @@ billboard.LineRenderer.prototype.render = function(wgt) {
 		x["tick"]["fit"] = true;
 	}
 	x["clipPath"] = false;
+	if (axes.xaxis.tickOptions) {
+		if (axes.xaxis.tickOptions.angle) {
+			if (axes.xaxis.tickOptions.angle != 0) {
+				x["tick"]["rotate"] = axes.xaxis.tickOptions.angle;
+			}
+		}
+	}
 	
 	var model = { 
 		bindto: "#"+wgt.$n().id, 
@@ -62,9 +76,18 @@ billboard.LineRenderer.prototype.render = function(wgt) {
 			columns: columns, 
 			type: wgt._type,
 			onclick: function(d, e) {
+				var i = 0;
+				var si = 0;
+				for(var s in wgt.getSeries()) {
+					if (s == d.id) {
+						si = i;
+						break;
+					}
+					i++;
+				}
 				wgt._dataClickTS = new Date().getTime();
 				wgt.fire("onDataClick", {
-					seriesIndex : 0,
+					seriesIndex : si,
 					pointIndex : d.index,
 					data : d.value,
 					ticks : wgt.getTicks()
@@ -88,7 +111,8 @@ billboard.LineRenderer.prototype.render = function(wgt) {
 		},
 		legend: {show: false},
 		axis: {
-			x: x
+			x: x,
+			rotated: rotated
 		},
 		grid: {
 		  x: {

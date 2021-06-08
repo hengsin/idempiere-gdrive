@@ -5,13 +5,13 @@ billboard.StackedBarRenderer = function() {};
 billboard.StackedBarRenderer.prototype.render = function(wgt) {
 	var columns = [];
 	var categories = new Array();
-	var seriesMap = new Array();
+	var seriesMap = {};
 	var currentSeries = "";
 	wgt.getSeriesData().forEach((x, i) => { 
 		x.forEach((y, j) => {
 			if (y.category) {
 				if (!seriesMap[currentSeries])
-					seriesMap[currentSeries] = new Array();
+					seriesMap[currentSeries] = {};
 				var categoryMap = seriesMap[currentSeries];
 				if (!categoryMap[y.category])
 					categoryMap[y.category] = y.value;
@@ -65,7 +65,10 @@ billboard.StackedBarRenderer.prototype.render = function(wgt) {
 		}
 	}
 	var x = {tick: {}};
+	var rotated = false;
 	var axes = wgt.getAxes();
+	if (axes.rotated)
+		rotated = axes.rotated;
 	if (axes.xaxis.renderer == "timeseries") {
 		x["type"] = "timeseries";
 		if (axes.xaxis.tickOptions) {
@@ -87,6 +90,13 @@ billboard.StackedBarRenderer.prototype.render = function(wgt) {
 		x["tick"]["fit"] = true;
 	}
 	x["clipPath"] = false;
+	if (axes.xaxis.tickOptions) {
+		if (axes.xaxis.tickOptions.angle) {
+			if (axes.xaxis.tickOptions.angle != 0) {
+				x["tick"]["rotate"] = axes.xaxis.tickOptions.angle;
+			}
+		}
+	}
 	
 	var model = { 
 		bindto: "#"+wgt.$n().id, 
@@ -122,7 +132,8 @@ billboard.StackedBarRenderer.prototype.render = function(wgt) {
 		},
 		legend: {show: true},
 		axis: {
-			x: x
+			x: x,
+			rotated: rotated
 		},
 		grid: {
 		  x: {
