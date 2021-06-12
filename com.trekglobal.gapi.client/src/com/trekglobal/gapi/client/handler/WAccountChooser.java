@@ -34,6 +34,8 @@ import org.adempiere.webui.component.ListItem;
 import org.adempiere.webui.component.Listbox;
 import org.adempiere.webui.component.Window;
 import org.compiere.model.MAuthorizationAccount;
+import org.compiere.util.Env;
+import org.compiere.util.Msg;
 import org.zkoss.zul.Separator;
 import org.zkoss.zul.Vlayout;
 
@@ -67,7 +69,7 @@ public class WAccountChooser extends Window {
 		layout.setVflex("1");
 		layout.setHflex("1");
 		Listbox listbox = new Listbox();
-		Label label = new Label("Choose Google Account: ");
+		Label label = new Label(Msg.getMsg(Env.getCtx(), "Google_Account_Choose")+": ");
 		label.setVflex("min");
 		layout.appendChild(new Separator());
 		layout.appendChild(label);

@@ -33,6 +33,8 @@ import org.adempiere.base.upload.IUploadHandler;
 import org.adempiere.base.upload.UploadMedia;
 import org.adempiere.base.upload.UploadResponse;
 import org.compiere.model.MAuthorizationAccount;
+import org.compiere.util.Env;
+import org.compiere.util.Msg;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -68,7 +70,7 @@ public class GDriveUploadHandler implements IUploadHandler {
 	 */
 	@Override
 	public String getLabel() {
-		return "Upload to Google Drive";
+		return Msg.getMsg(Env.getCtx(), "Google_Drive_Upload_To");
 	}
 
 	public UploadResponse uploadMedia(UploadMedia media, MAuthorizationAccount account) {
@@ -121,7 +123,7 @@ public class GDriveUploadHandler implements IUploadHandler {
 				}
 				String link = "https://drive.google.com/file/d/" + gfile.getId() + "/view";
 				
-				UploadResponse response = new UploadResponse(link, "Uploaded to Google Drive. Click here to view in Google Drive");
+				UploadResponse response = new UploadResponse(link, Msg.getMsg(Env.getCtx(), "Google_Drive_Uploaded"));
 				return response;
 			} 
 		} catch (Exception e) {
