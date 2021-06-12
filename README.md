@@ -1,3 +1,2 @@
-# idempiere-plugins
-iDempiere plugin projects.
-
+# idempiere-gdrive
+Basic Google Drive integration for iDempiere
