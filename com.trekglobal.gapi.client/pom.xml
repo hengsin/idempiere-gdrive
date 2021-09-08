@@ -3,10 +3,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.idempiere</groupId>
 	<artifactId>com.trekglobal.gapi.client</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>9.0.0-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 	<properties>
-		<tycho.version>2.3.0</tycho.version>
+		<tycho.version>2.4.0</tycho.version>
 		<tycho.extras.version>${tycho.version}</tycho.extras.version>
 		<lifecycle.mapping.version>1.0.0</lifecycle.mapping.version>
 		<maven.dependency.version>3.1.1</maven.dependency.version>
@@ -67,6 +67,25 @@
 										</versionRange>
 										<goals>
 											<goal>copy</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.eclipse.tycho
+										</groupId>
+										<artifactId>
+											target-platform-configuration
+										</artifactId>
+										<versionRange>
+											[2.4.0,)
+										</versionRange>
+										<goals>
+											<goal>target-platform</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>
@@ -187,27 +206,27 @@
 								<artifactItem>
 									<groupId>com.google.api-client</groupId>
     								<artifactId>google-api-client</artifactId>
-    								<version>1.31.4</version>
+    								<version>1.32.1</version>
 								</artifactItem>
 								<artifactItem>
 									<groupId>com.google.api-client</groupId>
 								    <artifactId>google-api-client-jackson2</artifactId>
-								    <version>1.31.4</version>
+								    <version>1.32.1</version>
 								</artifactItem>
 								<artifactItem>
 									<groupId>com.google.apis</groupId>
 									<artifactId>google-api-services-drive</artifactId>
-									<version>v3-rev20210419-1.31.0</version>
+									<version>v3-rev20210725-1.32.1</version>
 								</artifactItem>
 								<artifactItem>
 									<groupId>com.google.apis</groupId>
   									<artifactId>google-api-services-sheets</artifactId>
-  									<version>v4-rev20210322-1.31.0</version>
+  									<version>v4-rev20210629-1.32.1</version>
 								</artifactItem>
 								<artifactItem>
 									<groupId>com.google.http-client</groupId>
   									<artifactId>google-http-client-jackson2</artifactId>
-  									<version>1.39.2</version>
+  									<version>1.39.2-sp.1</version>
   								</artifactItem>							
 							</artifactItems>
 							<outputDirectory>lib</outputDirectory>
