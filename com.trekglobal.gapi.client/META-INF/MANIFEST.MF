@@ -90,5 +90,5 @@ Export-Package: com.google.api.client.googleapis,
  com.google.api.services.drive.model,
  com.google.api.services.sheets.v4,
  com.google.api.services.sheets.v4.model
-Service-Component: OSGI-INF/com.trekglobal.gapi.client.service.GAPIUploadService.xml,
- OSGI-INF/com.trekglobal.gapi.client.factory.GAPIProcessFactory.xml
+Service-Component: OSGI-INF/com.trekglobal.gapi.client.factory.GAPIProcessFactory.xml,
+ OSGI-INF/com.trekglobal.gapi.client.service.GAPIUploadService.xml
