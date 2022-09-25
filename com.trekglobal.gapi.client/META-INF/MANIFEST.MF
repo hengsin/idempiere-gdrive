@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Google API Client
 Bundle-SymbolicName: com.trekglobal.gapi.client
-Bundle-Version: 9.0.0.qualifier
+Bundle-Version: 10.0.0.qualifier
 Bundle-Activator: com.trekglobal.gapi.client.Activator
 Bundle-Vendor: TREKGLOBAL
 Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version>=11))"
